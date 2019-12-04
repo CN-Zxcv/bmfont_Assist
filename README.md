@@ -15,12 +15,14 @@ make a directory to store all font character files, drag the fontname dir to bmf
 
 like this
 
+```
 ├── bmfont64.exe
 ├── bmfont_Assist.exe
 └── fontname
     ├── uni_58.png
     ├── I.png
     └── 帮.png
+```
 
 
 
@@ -30,6 +32,7 @@ we use that config as template to add icons in fontname diretory and output the 
 
 after run, we got a fontname.fnt and a png file if we output as png
 
+```
 111
 ├── bmfont64.exe
 ├── bmfont_Assist.exe
@@ -40,6 +43,7 @@ after run, we got a fontname.fnt and a png file if we output as png
 │   └── 帮.png
 ├── fontname_0.png
 └── fontname.fnt
+```
 
 
 
