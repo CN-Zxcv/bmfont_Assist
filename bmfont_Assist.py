@@ -36,10 +36,16 @@ def generateFont(path):
     size = getTextureSize(files)
     print('TextureSize', size)
     for k, line in enumerate(configFileData):
-        if 'outWidth' in line:
-            configFileData[k] = re.sub(r'^.*$', 'outWidth={0}'.format(size['w']), line)
-        if 'outHeight' in line:
-            configFileData[k] = re.sub(r'^.*$', 'outHeigt={0}'.format(size['h']), line)
+        replaceLine(configFileData, k, 'outWidth', size['w'])
+        replaceLine(configFileData, k, 'outHeight', size['h'])
+        replaceLine(configFileData, k, 'fontSize', size['maxH'])
+        # replaceLine(configFileData, k, '', size['maxH'])
+        # if 'outWidth' in line:
+        #     configFileData[k] = re.sub(r'^.*$', 'outWidth={0}'.format(size['w']), line)
+        # if 'outHeight' in line:
+        #     configFileData[k] = re.sub(r'^.*$', 'outHeigt={0}'.format(size['h']), line)
+        # if 'lineHeight' in line:
+        #     configFileData[k] = re.sub(r'^.*$', 'lineHeight={0}'.format(size['maxH'], line))
     
     configFile.seek(0)
     configFile.writelines(configFileData)
@@ -48,7 +54,10 @@ def generateFont(path):
 
     os.system('bmfont64.exe -c {0} -o {1}'.format(configFileName, fontname + '.fnt'))
     os.remove(configFileName)
-    
+
+def replaceLine(configFileData, k, s, val):
+    if s in configFileData[k]:
+        configFileData[k] = re.sub(r'^.*$', '{0}={1}'.format(s, val), configFileData[k])
 
 # 取文件名最后一个字符作为编码
 # 无法作为文件名的特殊字符以编号形式命名文件
@@ -87,15 +96,15 @@ def getTextureSize(files):
             maxW = w
     
     num = math.ceil(math.sqrt(len(files)))
-    w = max(maxW, num * minW) + minW
-    h = max(maxH, num * minH) + minH
+    w = num * maxW
+    h = num * maxH
     realArea = w * h
 
     while realArea < area:
         w += maxW
         w += maxH
         realArea = w * h
-    return {'w':w, 'h':h}
+    return {'w':w, 'h':h, 'maxH':maxH}
 
 def main():
     if not os.path.exists('bmfont.bmfc'):
