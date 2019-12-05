@@ -54,9 +54,15 @@ def generateFont(path):
 # 无法作为文件名的特殊字符以编号形式命名文件
 # 比如 \92, /47, :58, ?63, "34, <60, >62, |124
 def getFontID(name):
-    r = re.findall('\d+$', name)
-    if (r):
-        return int(r[0])
+    r = re.match('(\D+)(\d+)$', name)
+    if r:
+        (h, t) = r.groups()
+        # print(h, t)
+        if h:
+            return int(t)
+    #     print('re', name, r.groups())
+    # if (r):
+    #     return int(r[0])
     else:
         char = name[len(name) - 1]
         return ord(char)
