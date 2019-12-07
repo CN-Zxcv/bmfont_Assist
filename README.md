@@ -60,3 +60,5 @@ as uni_58.png / uni58.png / 58.png / endwith number
 ### ps
 
 only tested with png , with a small number of chars, not sure the calc of outWidth outHeight is ok
+
+if use with png, export with `don't use palettes` otherwise bmfont wouldn't import the file, have no interest to dig the reason...
